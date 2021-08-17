@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>Login as a Restaurant Manager</h2>
+<mat-dialog-content>
+    <mat-form-field class='username-field' appearance='fill' aria-label='username'>
+        <mat-label>Username</mat-label>
+        <input matInput type='text' [(ngModel)]='username' />
+    </mat-form-field>
+    <mat-form-field class='password-field' appearance='fill' aria-label='password'>
+        <mat-label>Password</mat-label>
+        <input matInput type='password' [(ngModel)]='password' />
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button 
+    mat-raised-button color='primary' 
+    aria-label='login-button' 
+    class='login-button'
+    (click)='onLogin()'
+    [disabled]='password.length == 0 || username.length == 0'>
+        Login
+    </button>
+</mat-dialog-actions>
