@@ -49,8 +49,16 @@ export class AuthService {
   }
 
   logout = (): void => {
-    window.localStorage.removeItem('auth')
-    this.updateSubscriptions(Authentication.NOT_AUTHENTICATED)
+    this.http.post(`${environment.apiUrl}/user/logout`, {}, {
+      headers: { "Authentication": this.getAuth() ?? "" }
+    }).subscribe(
+      (resp) => {
+        window.localStorage.removeItem('auth')
+        this.updateSubscriptions(Authentication.NOT_AUTHENTICATED)
+      }, (err) => {
+        alert("An Error Occured: " + err.message)
+      }
+    )
   }
 
   login = (username: string, password: string): Promise<HttpResponse<any>> => {
