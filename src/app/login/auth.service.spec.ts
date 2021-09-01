@@ -58,6 +58,9 @@ describe('AuthService', () => {
         done()
       }
     })
+
+    const req = http.expectOne(`${environment.apiUrl}/user/logout`)
+    req.flush({})
   })
 
   it('should fetch profile with provided token', done => {
@@ -74,7 +77,6 @@ describe('AuthService', () => {
     )
     let req = http.expectOne(`${environment.apiUrl}/user/profile`)
     expect(req.request.method).toEqual('GET')
-    expect(req.request.headers.get('Authentication')).toBeTruthy()
     req.flush(user)
   })
 

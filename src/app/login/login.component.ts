@@ -42,6 +42,7 @@ export class LoginComponent {
             message = 'Unable to authenticate your account. Please try again later'
             break
           default:
+            console.dir(err)
             message = 'An unexpected error occured. Please try again later'
         }
         this.openNotification(message)

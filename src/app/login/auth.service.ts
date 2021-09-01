@@ -49,9 +49,7 @@ export class AuthService {
   }
 
   logout = (): void => {
-    this.http.post(`${environment.apiUrl}/user/logout`, {}, {
-      headers: { "Authentication": this.getAuth() ?? "" }
-    }).subscribe(
+    this.http.post(`${environment.apiUrl}/user/logout`, {}).subscribe(
       (resp) => {
         window.localStorage.removeItem('auth')
         this.updateSubscriptions(Authentication.NOT_AUTHENTICATED)
