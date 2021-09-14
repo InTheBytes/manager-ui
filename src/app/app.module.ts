@@ -19,6 +19,9 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './app.component';
 import { AuthInterceptor } from './login/auth.interceptor';
+import { OrderModule } from './order/order.module';
+
+
 
 @NgModule({
   declarations: [
@@ -42,6 +45,8 @@ import { AuthInterceptor } from './login/auth.interceptor';
     MatSidenavModule,
     MatIconModule,
     MatToolbarModule,
+
+    OrderModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}

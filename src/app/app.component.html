@@ -22,7 +22,7 @@
   <mat-sidenav #drawer [style.width]="navWidth" class='sidebar'>
     <div *ngFor='let route of routes'>
       <div class='nav-link' [style.padding]='navLinkPadding'>
-        <a [routerLink]='route.route' class='nav-link'>
+        <a [routerLink]='route.route' class='nav-link' (click)='drawer.toggle()'>
           {{ route.name }}
         </a>  
       </div>

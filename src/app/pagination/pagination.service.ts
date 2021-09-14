@@ -58,4 +58,9 @@ export class PaginationService<T> {
   previous = (): void => {
     (--this.currentPage >= 0) ? this.getPage() : this.currentPage++
   }
+
+  changeParams = (params: string): void => {
+    this.extraParams = params
+    this.getPage()
+  }
 }

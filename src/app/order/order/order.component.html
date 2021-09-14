@@ -1,1 +1,55 @@
-<p>order works!</p>
+<ng-template #conciseOrders>
+    <app-order-view-concise [orders]="orders"></app-order-view-concise>
+</ng-template>
+
+<ng-template #linkToHistory>
+    <a [routerLink]='["/order-history"]'>
+        <button mat-raised-button color="primary" >
+            View All
+        </button>
+    </a>
+</ng-template>
+
+<ng-template #linkToOrderManager>
+    <a [routerLink]='["/orders"]'>
+        <button mat-raised-button color="primary" >
+            Order Management
+        </button>
+    </a>
+</ng-template>
+
+<div *ngIf='bigScreen' class='big-screen-button' [style.width]="contentWidth">
+    <div *ngIf='isHistory; else linkToHistory'>
+        <ng-container *ngTemplateOutlet='linkToOrderManager'></ng-container>
+    </div>
+</div>
+
+<mat-card [style.width]="contentWidth">
+    <h2 *ngIf='isHistory'>
+        Order History
+    </h2>
+    <mat-tab-group *ngIf='!isHistory; else ordersTable' (selectedTabChange)="onTabChange()" [(selectedIndex)]="tabIndex" mat-align-tabs="center">
+        <mat-tab label="Current">
+            <ng-container *ngTemplateOutlet="ordersTable"></ng-container>
+        </mat-tab>
+        <mat-tab label="Scheduled">
+            <ng-container *ngTemplateOutlet="ordersTable"></ng-container>
+        </mat-tab>
+        <mat-tab label="Ready">
+            <ng-container *ngTemplateOutlet="ordersTable"></ng-container>
+        </mat-tab>
+    </mat-tab-group>
+</mat-card>
+
+<ng-template  #ordersTable>
+    <div *ngIf='!bigScreen' class='big-screen-button' [style.width]="contentWidth">
+        <div *ngIf='isHistory; else linkToHistory'>
+            <ng-container *ngTemplateOutlet='linkToOrderManager'></ng-container>
+        </div>
+    </div>
+    <app-page-controller [totalElements]="totalElements" [currentSize]="startingSize" [paginator]="paginator">
+        <div *ngIf="bigScreen; else conciseOrders">
+            <app-order-view [orders]="orders"></app-order-view>
+        </div>
+    </app-page-controller>
+</ng-template>

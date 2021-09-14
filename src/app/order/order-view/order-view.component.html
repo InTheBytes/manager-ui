@@ -1,0 +1,18 @@
+
+<mat-accordion [multi]='false'>
+    <mat-expansion-panel *ngFor="let order of orders" >
+        
+        <mat-expansion-panel-header>
+            <span class="time-window">{{ order.windowStart | date: 'h:mm'}} - {{ order.windowEnd | date: 'h:mm a'}}</span>
+            <p class="customer">{{"     " + order.customer.name }}</p>
+        </mat-expansion-panel-header>
+
+        <mat-list *ngFor="let item of order.items">
+            <mat-list-item>
+                <span class="item-quantity">{{item.quantity}}</span>
+                <span class="item-name">{{item.name}}</span>
+            </mat-list-item>
+        </mat-list>
+    </mat-expansion-panel>
+
+</mat-accordion>
