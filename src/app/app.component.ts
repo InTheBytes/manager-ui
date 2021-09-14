@@ -2,6 +2,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSpinner } from '@angular/material/progress-spinner';
+import { Router } from '@angular/router';
 import { AuthService, Authentication } from './login/auth.service';
 import { LoginComponent } from './login/login.component';
 
@@ -39,8 +40,8 @@ export class AppComponent implements OnInit {
   routes: routeItem[] = [
     {route: '/home', name: 'Home'},
     {route: '/', name: 'Manage Restaurant'},
-    {route: '/', name: 'Manage Orders'},
-    {route: '/', name: 'View Order History'},
+    {route: '/orders', name: 'Manage Orders'},
+    {route: '/order-history', name: 'View Order History'},
     {route: '/', name: 'Manage Accounts'},
     {route: '/', name: 'Contact Us'}
   ]
@@ -48,7 +49,8 @@ export class AppComponent implements OnInit {
   constructor(
     public auth: AuthService,
     public dialog: MatDialog,
-    public breakpointObserver: BreakpointObserver
+    public breakpointObserver: BreakpointObserver,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -66,6 +68,7 @@ export class AppComponent implements OnInit {
             self.dialog.open(LoginComponent, {
               disableClose: true
             })
+            self.router.navigate(['home'])
             break
           case Authentication.PROCESSING:
             self.dialog.open(MatSpinner, {
