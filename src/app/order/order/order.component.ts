@@ -1,7 +1,9 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PaginationService } from 'src/app/pagination/pagination.service';
+import { environment } from 'src/environments/environment';
 import { Order } from '../order.type';
 
 @Component({
@@ -11,7 +13,6 @@ import { Order } from '../order.type';
     `mat-card { margin: 3% auto 0 auto; }`,
     `.big-screen-button, .small-screen-button { margin: 2% auto 0 auto; height: 5%; }`,
     `a { margin-left: auto; margin-right: 0; }`,
-    // `button { float: right; margin-right: 5%; margin-top: 0.5% }`,
     `h2 { 
       display: flex;
       justify-content: center;
@@ -24,6 +25,9 @@ import { Order } from '../order.type';
   providers: [PaginationService]
 })
 export class OrderComponent implements OnInit {
+
+  buttonText: string = 'Complete Order'
+  showDate: boolean = false
 
   startingSize: number = 5 
 
@@ -42,7 +46,8 @@ export class OrderComponent implements OnInit {
   constructor(
     public breakpointObserver: BreakpointObserver,
     public paginator: PaginationService<Order>,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    public http: HttpClient
   ) { }
 
   makeParams(): string {
@@ -51,8 +56,15 @@ export class OrderComponent implements OnInit {
 
   ngOnInit(): void {
     this.isHistory = this.route.snapshot.url[0].path.includes('history')
+    let params: string = ""
 
-    let params = (this.isHistory) ? "" : this.makeParams()
+    if (this.isHistory) {
+      this.showDate = true
+      this.buttonText = ""
+    } else {
+      params = this.makeParams()
+    }
+
 
     this.paginator.signUp("order", this.startingSize, params).subscribe(
       (resp) => {
@@ -92,19 +104,48 @@ export class OrderComponent implements OnInit {
     switch (this.tabIndex) {
       case 0:
         params = this.makeParams()
+        this.buttonText = 'Complete Order'
+        this.showDate = false
         break
       case 1:
         this.dayParam = "future"
         params = this.makeParams()
+        this.buttonText = ''
+        this.showDate = true
         break
       case 2:
         this.statusParam = 2
         params = this.makeParams()
+        this.buttonText = ''
+        this.showDate = false
         break
       default:
         params = ""
+        this.buttonText = ''
+        this.showDate = true
     }
     this.paginator.changeParams(params)
+  }
+
+  makeOrderUpdate(order: Order): any {
+    let newOrder: any = Object.assign({}, order)
+    delete newOrder['restaurant']
+    delete newOrder['customer']
+    delete newOrder['id']
+    delete newOrder['windowStart']
+    delete newOrder['windowEnd']
+    delete newOrder['specialInstructions']
+    newOrder['restaurantId'] = order.restaurant.id
+    newOrder['customerId'] = order.customer.id
+    newOrder['status'] = 2
+    newOrder['driverId'] = null
+    return newOrder
+  }
+
+  onCompleteOrder(order: Order) {
+    this.http.put(`${environment.apiUrl}/order/${order.id}`, this.makeOrderUpdate(order)).subscribe(
+      resp => this.paginator.getPage()
+    )
   }
 
 }

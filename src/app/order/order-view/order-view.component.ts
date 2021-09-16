@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Order } from '../order.type';
+import { OrderTable } from '../order/order-table';
 
 @Component({
   selector: 'app-order-view',
@@ -8,13 +9,6 @@ import { Order } from '../order.type';
     `.customer, .item-name { padding: 0 10%; }`,
   ]
 })
-export class OrderViewComponent implements OnInit {
-
-  @Input("orders") orders!: Order[]
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+export class OrderViewComponent extends OrderTable {
 
 }

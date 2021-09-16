@@ -29,7 +29,7 @@ export class PaginationService<T> {
     }
   )
 
-  private getPage = (): void => {
+  getPage = (): void => {
     let url: string = `${environment.apiUrl}/${this.endpoint}?page=${this.currentPage}&page-size=${this.pageSize}`
     url += (this.extraParams.length > 0) ? `&${this.extraParams}` : "";
     this.http.get<Page<T>>(url).subscribe(

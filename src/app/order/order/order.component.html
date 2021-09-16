@@ -1,5 +1,28 @@
 <ng-template #conciseOrders>
-    <app-order-view-concise [orders]="orders"></app-order-view-concise>
+    <app-order-view-concise 
+        [orders]="orders" 
+        [buttonText]="buttonText" 
+        [showDate]='showDate'
+        (buttonClick)='onCompleteOrder($event)'>
+    </app-order-view-concise>
+</ng-template>
+
+<ng-template  #ordersTable>
+    <div *ngIf='!bigScreen' class='big-screen-button' [style.width]="contentWidth">
+        <div *ngIf='isHistory; else linkToHistory'>
+            <ng-container *ngTemplateOutlet='linkToOrderManager'></ng-container>
+        </div>
+    </div>
+    <app-page-controller [totalElements]="totalElements" [currentSize]="startingSize" [paginator]="paginator">
+        <div *ngIf="bigScreen; else conciseOrders">
+            <app-order-view 
+            [orders]="orders" 
+            [buttonText]="buttonText" 
+            [showDate]='showDate'
+            (buttonClick)='onCompleteOrder($event)'>
+        </app-order-view>
+        </div>
+    </app-page-controller>
 </ng-template>
 
 <ng-template #linkToHistory>
@@ -17,6 +40,7 @@
         </button>
     </a>
 </ng-template>
+
 
 <div *ngIf='bigScreen' class='big-screen-button' [style.width]="contentWidth">
     <div *ngIf='isHistory; else linkToHistory'>
@@ -40,16 +64,3 @@
         </mat-tab>
     </mat-tab-group>
 </mat-card>
-
-<ng-template  #ordersTable>
-    <div *ngIf='!bigScreen' class='big-screen-button' [style.width]="contentWidth">
-        <div *ngIf='isHistory; else linkToHistory'>
-            <ng-container *ngTemplateOutlet='linkToOrderManager'></ng-container>
-        </div>
-    </div>
-    <app-page-controller [totalElements]="totalElements" [currentSize]="startingSize" [paginator]="paginator">
-        <div *ngIf="bigScreen; else conciseOrders">
-            <app-order-view [orders]="orders"></app-order-view>
-        </div>
-    </app-page-controller>
-</ng-template>
