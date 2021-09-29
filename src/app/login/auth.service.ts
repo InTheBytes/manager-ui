@@ -12,6 +12,8 @@ export class AuthService {
   timestampFormat: string = "DD-MM-YYYY HH:mm"
   authDuration: number = 2
 
+  profile!: User | null
+
   constructor(private http: HttpClient) { }
 
   rootObservers: Observer<Authentication>[] = []
@@ -52,6 +54,7 @@ export class AuthService {
     this.http.post(`${environment.apiUrl}/user/logout`, {}).subscribe(
       (resp) => {
         window.localStorage.removeItem('auth')
+        this.profile = null
         this.updateSubscriptions(Authentication.NOT_AUTHENTICATED)
       }, (err) => {
         alert("An Error Occured: " + err.message)
@@ -108,6 +111,7 @@ export class AuthService {
           (resp) => {
             let role = resp["role"]["name"]
             if (role == "restaurant" || role == "manager") {
+              this.profile = resp
               resolve(resp)
             } else {
               reject("Account is not a manager")
@@ -123,6 +127,7 @@ export class AuthService {
 }
 
 export type User = {
+  userId: string
   username: string,
   role: {
     name: string

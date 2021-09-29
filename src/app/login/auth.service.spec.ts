@@ -64,7 +64,7 @@ describe('AuthService', () => {
   })
 
   it('should fetch profile with provided token', done => {
-    let user = {username: 'test', role: {name: 'restaurant'}, email: 'test', firstName: 'test', lastName: 'test'}
+    let user = {userId: 'id', username: 'test', role: {name: 'restaurant'}, email: 'test', firstName: 'test', lastName: 'test'}
     service.getProfile('token').then(
       (resp) => {
         expect(resp).toEqual(user)
@@ -103,7 +103,7 @@ describe('AuthService', () => {
   })
 
   it('should send login request and fetch a profile', done => {
-    let user = {username: 'test', role: {name: 'restaurant'}, email: 'test', firstName: 'test', lastName: 'test'}
+    let user = {userId: 'id', username: 'test', role: {name: 'restaurant'}, email: 'test', firstName: 'test', lastName: 'test'}
     let profileSpy = spyOn(service, 'getProfile').and.returnValue(Promise.resolve(user))
     service.login('test', 'pass').then(
       (resp) => {

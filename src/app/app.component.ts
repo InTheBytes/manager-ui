@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
 
   routes: routeItem[] = [
     {route: '/home', name: 'Home'},
-    {route: '/', name: 'Manage Restaurant'},
+    {route: '/restaurant', name: 'Manage Restaurant'},
     {route: '/orders', name: 'Manage Orders'},
     {route: '/order-history', name: 'View Order History'},
     {route: '/', name: 'Manage Accounts'},

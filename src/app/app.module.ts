@@ -20,6 +20,7 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './app.component';
 import { AuthInterceptor } from './login/auth.interceptor';
 import { OrderModule } from './order/order.module';
+import { RestaurantModule } from './restaurant/restaurant.module';
 
 
 
@@ -46,7 +47,8 @@ import { OrderModule } from './order/order.module';
     MatIconModule,
     MatToolbarModule,
 
-    OrderModule
+    OrderModule,
+    RestaurantModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}

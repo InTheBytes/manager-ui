@@ -1,0 +1,70 @@
+<div *ngIf="restaurant != null">
+
+    <ng-template #createFoodDialog>
+        <app-food-dialog (cancel)='closeEditor()'></app-food-dialog>
+    </ng-template>
+
+    <ng-template #locationEditDialog>
+        <app-location-dialog [name]='restaurant.name' [location]='restaurant.location' (cancel)='closeEditor()'></app-location-dialog>
+    </ng-template>
+
+    <mat-card class='restaurant-card'>
+        <mat-card-header class='restaurant-header'>
+            <mat-card-title>{{ restaurant.name }}</mat-card-title>
+            <mat-card-subtitle>
+                <p>{{restaurant.location.unit}} {{restaurant.location.street}}<p>
+                <p>{{restaurant.location.city}}, {{restaurant.location.state}} {{restaurant.location.zipCode}}<p>
+            </mat-card-subtitle>
+        </mat-card-header>
+
+        <div class='button-dash'>
+            <div *ngIf='service.editsMade'>
+                <button mat-icon-button color='accent' (click)='service.getRestaurant()'>
+                    <mat-icon>undo</mat-icon>
+                </button>
+                <button mat-icon-button color='accent' (click)='service.updateRestaurant()'>
+                    <mat-icon>save</mat-icon>
+                </button>
+            </div>
+    
+            <button mat-icon-button color='primary' (click)='openEditor(locationEditDialog)'>
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color='primary' (click)='openEditor(createFoodDialog)'>
+                <mat-icon>add_circle</mat-icon>
+            </button>
+        </div>
+
+        <mat-card-content>
+            <h2>Menu</h2>
+
+            <div *ngFor='let item of restaurant.foods' class='menu'>
+                <mat-card class='food-card' [style.width]='menuItemWidth'>
+                    <mat-card-header>
+                        <mat-card-title>{{item.name}}</mat-card-title>
+                        <mat-card-subtitle>{{item.price | currency}}</mat-card-subtitle>
+                    </mat-card-header>
+
+                    <mat-card-content>
+                        <p>{{item.description}}</p>
+                    </mat-card-content>
+
+                    <mat-card-actions>
+                        <button mat-icon-button color="primary" (click)="openEditor(foodEditDialog)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-icon-button color="warn" (click)="service.deleteFoodItem(item)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+
+                        <ng-template #foodEditDialog>
+                            <app-food-dialog [foodItem]='item' (cancel)='closeEditor()'></app-food-dialog>
+                        </ng-template>
+
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </mat-card-content>
+    </mat-card>
+        
+</div>

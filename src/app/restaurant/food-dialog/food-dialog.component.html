@@ -1,0 +1,45 @@
+<div *ngIf='isEditFood; else createFoodTitle'>
+    <h2 mat-dialog-title>Edit {{foodItem.name}}</h2>
+</div>
+<ng-template #createFoodTitle >
+    <h2 mat-dialog-title>Create New Menu Item</h2>
+</ng-template>
+
+<mat-dialog-content>
+    <mat-form-field *ngIf="!isEditFood" class='name-field' aria-label='food-name'>
+        <mat-label>Name</mat-label>
+        <input matInput type='text' [(ngModel)]='foodItem.name'>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Price</mat-label>
+        <input matInput type='number' 
+        [ngModel]="foodItem.price"
+        (ngModelChange)='foodItem.price=$event'
+        aria-label='food-price'>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Description</mat-label>
+        <textarea matInput cdkTextareaAutosize [(ngModel)]='foodItem.description'></textarea>
+    </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button
+    mat-raised-button color='secondary'
+    aria-label='cancel-button'
+    (click)='onCancel()'
+    >
+        Cancel
+    </button>
+
+    <button
+    mat-raised-button color='primary'
+    aria-label='okay-button'
+    [disabled]='!verify()'
+    (click)='onSubmit()'
+    >
+        Okay
+    </button>
+</mat-dialog-actions>

@@ -10,18 +10,18 @@ export type Order = {
     items: OrderItem[]
 }
 
-export type User = {
+type User = {
     id: string,
     name: string
 }
 
-export type Restaurant = {
+type Restaurant = {
     id: string,
     name: string,
     location: Location
 }
 
-export type Location = {
+type Location = {
     unit: number,
     street: string,
     city: string,
@@ -29,7 +29,7 @@ export type Location = {
     zipCode: string
 }
 
-export type OrderItem = {
+type OrderItem = {
     food: string,
     quantity: number,
     name: string,

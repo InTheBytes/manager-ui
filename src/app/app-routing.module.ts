@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './app.component';
 import { OrderComponent } from './order/order/order.component';
+import { RestaurantDetailsComponent } from './restaurant/restaurant-details/restaurant-details.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,11 @@ const routes: Routes = [
   {
     path: 'order-history',
     component: OrderComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: 'restaurant',
+    component: RestaurantDetailsComponent,
     pathMatch: 'full'
   }
 ];
