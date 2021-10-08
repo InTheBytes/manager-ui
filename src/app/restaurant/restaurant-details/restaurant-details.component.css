@@ -1,0 +1,42 @@
+.restaurant-card {
+    margin: 0 auto; 
+    width: 70%; 
+    height: 100%
+}
+
+.restaurant-header {
+    justify-content: center
+}
+
+.food-card {
+    display: flex;
+    flex-wrap: wrap;
+    float: left; 
+    margin: 5%
+}
+
+.food-card > mat-card-header {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 5%;
+    display: inline;
+}
+
+.edit-dash {
+    display: flex;
+    flex-direction: column;
+    flex: 2%;
+    position: fixed;
+    width: auto;
+    z-index: 100000;
+    margin-left: 2%;
+    margin-top: 2%;
+}
+
+.edit-dash > button {
+    margin-bottom: 10%;
+}
+
+.food-edit-button, .restaurant-edit-button {
+    float: right;
+}

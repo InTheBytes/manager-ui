@@ -35,6 +35,14 @@
     </button>
 
     <button
+    *ngIf='isEditFood'
+    mat-raised-button color='warn'
+    aria-label='delete-button'
+    (click)='onDelete()'>
+        Delete
+    </button>
+
+    <button
     mat-raised-button color='primary'
     aria-label='okay-button'
     [disabled]='!verify()'

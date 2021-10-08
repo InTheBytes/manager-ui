@@ -18,6 +18,7 @@ export type Location = {
 }
 
 export type Food = {
+    restaurantId?: string
     name: string
     price: number
     description: string

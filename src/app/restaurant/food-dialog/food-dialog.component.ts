@@ -54,4 +54,9 @@ export class FoodDialogComponent implements OnInit {
     this.onCancel()
   }
 
+  onDelete(): void {
+    this.service.deleteFoodItem(this.foodItem)
+    this.cancel.emit()
+  }
+
 }

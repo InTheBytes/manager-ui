@@ -8,12 +8,7 @@ import { Food, Restaurant } from '../restaurant.type';
 @Component({
   selector: 'app-restaurant-details',
   templateUrl: './restaurant-details.component.html',
-  styles: [
-    `.restaurant-card {margin: 0 auto; width: 70%; height: 100%}`,
-    `.restaurant-header {justify-content: center}`,
-    `.button-dash {display: flex; justify-content: center}`,
-    `.food-card {float: left; margin: 5%}`
-  ]
+  styleUrls: ['./restaurant-details.component.css']
 })
 export class RestaurantDetailsComponent implements OnInit {
 
@@ -22,6 +17,8 @@ export class RestaurantDetailsComponent implements OnInit {
   dialogRef!: MatDialogRef<any>
 
   menuItemWidth!: string
+
+  isEditOpen: boolean = false
 
   constructor(
     public breakpoints: BreakpointObserver,
@@ -61,6 +58,16 @@ export class RestaurantDetailsComponent implements OnInit {
 
   openEditor(itemTemplate: TemplateRef<any>): void {
     this.dialogRef = this.dialog.open(itemTemplate)
+  }
+
+  cancelEdits(): void {
+    this.service.getRestaurant()
+    this.isEditOpen = false
+  }
+
+  saveChanges(): void {
+    this.service.updateRestaurant()
+    this.isEditOpen = false
   }
 
   closeEditor(): void {

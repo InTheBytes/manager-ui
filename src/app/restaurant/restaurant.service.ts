@@ -49,12 +49,17 @@ export class RestaurantService {
 
 
   updateRestaurant = (): void => {
+    this.formatFoods()
     this.http.put<Restaurant>(
       `${environment.apiUrl}/restaurant/${this.currentRestaurant.restaurantId}`,
       this.currentRestaurant
     ).subscribe(
       restaurant => this.refreshWithApi(restaurant)
     )
+  }
+
+  formatFoods(): void {
+    this.currentRestaurant.foods.map(food => food.restaurantId = this.currentRestaurant.restaurantId)
   }
 
 
@@ -84,6 +89,7 @@ export class RestaurantService {
 
   deleteFoodItem = (item: Food) => {
     this.currentRestaurant.foods.splice(this.getFoodIndex(item), 1)
+    this.refreshWithEdits()
   }
 
 
